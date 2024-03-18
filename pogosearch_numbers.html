@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options Selector</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 70px);
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 8px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #generatedText {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Options Selector</h1>
+    <h2>Available Options:</h2>
+    <ul id="optionsList"></ul>
+
+    <p>Select options (comma-separated, e.g., 1,2,3):</p>
+    <input type="text" id="selectedOptions">
+    <button onclick="generateText()">Generate Text</button>
+
+    <p id="generatedText"></p>
+</div>
+
+<script>
+function option_1() {
+    return "shiny";
+}
+function option_2() {
+    return "!shiny";
+}
+function option_3() {
+    return "legendary";
+}
+function option_4() {
+    return "!legendary";
+}
+function option_5() {
+    return "costume";
+}
+function option_6() {
+    return "!costume";
+}
+function option_7() {
+    return "mythical";
+}
+function option_8() {
+    return "!mythical";
+}
+function option_9() {
+    return "ultra beasts";
+}
+function option_10() {
+    return "!ultra beasts";
+}
+function option_11() {
+    return "traded";
+}
+function option_12() {
+    return "!traded";
+}
+function option_13() {
+    return "shadow";
+}
+function option_14() {
+    return "!shadow";
+}
+function option_15() {
+    return "purified";
+}
+function option_16() {
+    return "!purified";
+}
+function option_17() {
+    return "kanto";
+}
+function option_18() {
+    return "!kanto";
+}
+function option_19() {
+    return "johto";
+}
+function option_20() {
+    return "!johto";
+}
+function option_21() {
+    return "hoenn";
+}
+function option_22() {
+    return "!hoenn";
+}
+function option_23() {
+    return "sinnoh";
+}
+function option_24() {
+    return "!sinnoh";
+}
+function option_25() {
+    return "unova";
+}
+function option_26() {
+    return "!unova";
+}
+function option_27() {
+    return "alola";
+}
+function option_28() {
+    return "!alola";
+}
+function option_29() {
+    return "galar";
+}
+function option_30() {
+    return "!galar";
+}
+function option_31() {
+    return "paldea";
+}
+function option_32() {
+    return "!paldea";
+}
+function option_33() {
+    return "0*";
+}
+function option_34() {
+    return "1*";
+}
+function option_35() {
+    return "2*";
+}
+function option_36() {
+    return "3*";
+}
+function option_37() {
+    return "4*";
+}
+function option_38() {
+    return "!0*";
+}
+function option_39() {
+    return "!1*";
+}
+function option_40() {
+    return "!2*";
+}
+function option_41() {
+    return "!3*";
+}
+
+const options = {
+    '1': option_1,
+    '2': option_2,
+    '3': option_3,
+    '4': option_4,
+    '5': option_5,
+    '6': option_6,
+    '7': option_7,
+    '8': option_8,
+    '9': option_9,
+    '10': option_10,
+    '11': option_11,
+    '12': option_12,
+    '13': option_13,
+    '14': option_14,
+    '15': option_15,
+    '16': option_16,
+    '17': option_17,
+    '18': option_18,
+    '19': option_19,
+    '20': option_20,
+    '21': option_21,
+    '22': option_22,
+    '23': option_23,
+    '24': option_24,
+    '25': option_25,
+    '26': option_26,
+    '27': option_27,
+    '28': option_28,
+    '29': option_29,
+    '30': option_30,
+    '31': option_31,
+    '32': option_32,
+    '33': option_33,
+    '34': option_34,
+    '35': option_35,
+    '36': option_36,
+    '37': option_37,
+    '38': option_38,
+    '39': option_39,
+    '40': option_40,
+    '41': option_41,
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+    const optionsList = document.getElementById('optionsList');
+    Object.keys(options).forEach(function(key) {
+        const listItem = document.createElement('li');
+        listItem.textContent = key + ": " + options[key]();
+        optionsList.appendChild(listItem);
+    });
+});
+
+function generateText() {
+    const selectedOptionsInput = document.getElementById('selectedOptions');
+    const selectedOptions = selectedOptionsInput.value.split(',');
+    let outputText = "";
+    selectedOptions.forEach(function(option, index) {
+        const trimmedOption = option.trim();
+        if (trimmedOption in options) {
+            outputText += options[trimmedOption]();
+            if (index !== selectedOptions.length - 1) {
+                outputText += "|";
+            }
+        }
+    });
+    const generatedTextElement = document.getElementById('generatedText');
+    generatedTextElement.textContent = outputText;
+}
+</script>
+

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Options Selector</title>
+<title>PoGo Search Generator</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -29,21 +29,25 @@
     ul {
         list-style-type: none;
         padding: 0;
+        margin: 0;
     }
 
-    li {
+    .options-column {
+        float: left;
+        width: 50%;
+    }
+
+    .options-column li {
         margin-bottom: 5px;
     }
 
-    input[type="text"] {
-        width: calc(100% - 70px);
-        padding: 8px;
+    input[type="checkbox"] {
         margin-right: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
     }
 
     button {
+        clear: both;
+        margin-top: 10px;
         padding: 8px 20px;
         background-color: #007bff;
         color: #fff;
@@ -60,21 +64,26 @@
         margin-top: 20px;
         font-size: 18px;
         color: #333;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        resize: vertical;
     }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Options Selector</h1>
+    <h1>PoGo Search Generator</h1>
     <h2>Available Options:</h2>
-    <ul id="optionsList"></ul>
+    <div class="options-column" id="optionsColumn1"></div>
+    <div class="options-column" id="optionsColumn2"></div>
 
-    <p>Select options (comma-separated, e.g., 1,2,3):</p>
-    <input type="text" id="selectedOptions">
     <button onclick="generateText()">Generate Text</button>
 
-    <p id="generatedText"></p>
+    <textarea id="generatedText" rows="6" placeholder="Generated Text"></textarea>
 </div>
 
 <script>
@@ -201,6 +210,9 @@ function option_40() {
 function option_41() {
     return "!3*";
 }
+function option_42() {
+    return "!4*";
+}
 
 const options = {
     '1': option_1,
@@ -244,32 +256,53 @@ const options = {
     '39': option_39,
     '40': option_40,
     '41': option_41,
+    '42': option_42,
 };
 
 document.addEventListener("DOMContentLoaded", function() {
-    const optionsList = document.getElementById('optionsList');
+    const optionsColumn1 = document.getElementById('optionsColumn1');
+    const optionsColumn2 = document.getElementById('optionsColumn2');
+    let columnIndex = 1;
+
     Object.keys(options).forEach(function(key) {
         const listItem = document.createElement('li');
-        listItem.textContent = key + ": " + options[key]();
-        optionsList.appendChild(listItem);
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = key;
+        checkbox.id = 'option_' + key;
+
+        const label = document.createElement('label');
+        label.htmlFor = 'option_' + key;
+        label.textContent = key + ": " + options[key]();
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(label);
+
+        if (columnIndex === 1) {
+            optionsColumn1.appendChild(listItem);
+        } else {
+            optionsColumn2.appendChild(listItem);
+        }
+
+        columnIndex = columnIndex % 2 + 1; // Cycle through columns
     });
 });
 
 function generateText() {
-    const selectedOptionsInput = document.getElementById('selectedOptions');
-    const selectedOptions = selectedOptionsInput.value.split(',');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
     let outputText = "";
-    selectedOptions.forEach(function(option, index) {
-        const trimmedOption = option.trim();
-        if (trimmedOption in options) {
-            outputText += options[trimmedOption]();
-            if (index !== selectedOptions.length - 1) {
+    checkboxes.forEach(function(checkbox, index) {
+        if (checkbox.value in options) {
+            outputText += options[checkbox.value]();
+            if (index !== checkboxes.length - 1) {
                 outputText += "|";
             }
         }
     });
     const generatedTextElement = document.getElementById('generatedText');
-    generatedTextElement.textContent = outputText;
+    generatedTextElement.value = outputText;
 }
 </script>
 
+</body>
+</html>
